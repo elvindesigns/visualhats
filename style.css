@@ -83,11 +83,27 @@ body {
     letter-spacing: 0.1em;
     font-weight: 500;
     text-transform: uppercase;
-    transition: opacity 0.2s;
 }
 
-.navbar a:hover {
-    opacity: 0.7;
+/* Nav Link Underline Animation */
+.nav-left > a, .nav-right > a, .events-link {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.nav-left > a::after, .nav-right > a::after, .events-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #eaddb6; /* Gold underline */
+    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nav-left > a:hover::after, .nav-right > a:hover::after, .events-link:hover::after {
+    width: 100%;
 }
 
 .nav-center {
@@ -1370,6 +1386,97 @@ body {
     color: #eaddb6;
 }
 
+/* Nav Dropdown (Events) */
+.nav-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2rem; /* creates safe hover bridge */
+    margin-bottom: -2rem;
+}
+
+.events-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(26, 79, 50, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(234, 221, 182, 0.3);
+    padding: 1.5rem;
+    min-width: 280px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-radius: 4px;
+}
+
+.nav-dropdown-wrapper:hover .events-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.event-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid rgba(234, 221, 182, 0.3);
+    padding-right: 1.5rem;
+}
+
+.event-date .day {
+    font-size: 2.5rem;
+    color: #eaddb6;
+    line-height: 1;
+}
+
+.event-date .month {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: #f7f5ed;
+    margin-top: 0.2rem;
+}
+
+.event-details h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #f7f5ed;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.event-details p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(247, 245, 237, 0.7);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+}
+
+.event-reserve {
+    display: inline-block;
+    color: #eaddb6 !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #eaddb6;
+    padding-bottom: 2px;
+}
+
+.event-reserve:hover {
+    color: #ffffff !important;
+    border-color: #ffffff;
+}
+
+/* ==================== HERO SECTION ==================== */
 /* ==================== LUXURY MODAL ==================== */
 .modal-backdrop {
     position: fixed;

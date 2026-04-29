@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
 
-    // Preloader and text split logic
-    window.addEventListener('load', () => {
-
+    // Preloader and explicit asset loading logic
+    function initPreloader() {
         // Setup text animation wrapper
         const title = document.querySelector('.hero-content .title');
         if (title) {
@@ -19,7 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 preloader.classList.add('loaded');
                 setTimeout(() => preloader.style.display = 'none', 1500); // Wait for transition out
             }
-        }, 1500); // Play preloader animation for 1.5s
+        }, 1500); // Minimum 1.5s play time for preloader
+    }
+
+    // Explicitly guarantee all visual assets are loaded into memory
+    const images = Array.from(document.images);
+    const imagePromises = images.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve; // don't permanently hang on a dead asset
+        });
+    });
+
+    // Wait for window load + all specific image promises
+    const windowLoadPromise = new Promise(resolve => {
+        if (document.readyState === 'complete') resolve();
+        else window.addEventListener('load', resolve);
+    });
+
+    Promise.all([...imagePromises, windowLoadPromise]).then(() => {
+        // Only run when memory confirms all assets exist
+        initPreloader();
     });
 
     // Handle scroll event for navbar background change
