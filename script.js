@@ -51,6 +51,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Handle Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMobileBtn = document.getElementById('close-mobile-btn');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    if (mobileMenuBtn && closeMobileBtn && mobileMenuOverlay) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        const closeMobileMenu = () => {
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeMobileBtn.addEventListener('click', closeMobileMenu);
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    }
+
     // Parallax effect for collage items (combines Mouse Move + Scroll)
     const parallaxItems = document.querySelectorAll('.collage-item');
     let mouseX = 0;
@@ -107,8 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Target offsets: Math matches landing at approx left:40vw, top: 45vh mapping from initial hero placement
                 const easeCubic = 1 - Math.pow(1 - progress, 3); // smooth decelerated landing
-                const deltaXvw = easeCubic * -15; // Slide left much less (reduced from -16 to -10)
-                const deltaYvh = easeCubic * -30; // Slide up relative to the anchor structure to rest safely
+                const isMobile = window.innerWidth <= 768;
+                const targetXvw = isMobile ? -45 : -15; // Move far off screen on mobile
+                const targetYvh = isMobile ? -35 : -30; // Move hat even higher on mobile
+                const deltaXvw = easeCubic * targetXvw;
+                const deltaYvh = easeCubic * targetYvh;
 
                 // Use new independent CSS properties (rotate/scale) perfectly bypassing the CSS 'forwards' animation lock
                 // The baseline from the completed entrance animation is explicitly rotate(0deg) scale(1)

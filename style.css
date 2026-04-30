@@ -86,23 +86,30 @@ body {
 }
 
 /* Nav Link Underline Animation */
-.nav-left > a, .nav-right > a, .events-link {
+.nav-left>a,
+.nav-right>a,
+.events-link {
     position: relative;
     padding-bottom: 4px;
 }
 
-.nav-left > a::after, .nav-right > a::after, .events-link::after {
+.nav-left>a::after,
+.nav-right>a::after,
+.events-link::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 0%;
     height: 2px;
-    background-color: #eaddb6; /* Gold underline */
+    background-color: #eaddb6;
+    /* Gold underline */
     transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.nav-left > a:hover::after, .nav-right > a:hover::after, .events-link:hover::after {
+.nav-left>a:hover::after,
+.nav-right>a:hover::after,
+.events-link:hover::after {
     width: 100%;
 }
 
@@ -144,6 +151,62 @@ body {
 
 .icon-btn:hover {
     opacity: 0.7;
+}
+
+.hamburger-btn {
+    display: none;
+}
+
+/* ==================== MOBILE MENU ==================== */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(26, 79, 50, 0.98);
+    backdrop-filter: blur(15px);
+    z-index: 99500; /* Above navbar (10000) and modals (99000), below preloader (99999) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.close-mobile-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: #eaddb6;
+    transform: scale(1.5);
+}
+
+.mobile-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    color: #f7f5ed;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: color 0.3s ease;
+}
+
+.mobile-link:hover {
+    color: #eaddb6;
 }
 
 /* ==================== HERO SECTION ==================== */
@@ -540,22 +603,6 @@ body {
     animation: animPin 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 2.3s forwards;
 }
 
-/* Mobile Responsiveness tweaks */
-@media (max-width: 768px) {
-
-    .nav-left,
-    .nav-right {
-        display: none;
-    }
-
-    .hero-content .title {
-        font-size: 18vw;
-    }
-
-    .main-hat {
-        width: 60vw;
-    }
-}
 
 /* ==================== PRELOADER ==================== */
 .preloader {
@@ -564,7 +611,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 99999; /* Highest of all — above everything */
     display: flex;
     pointer-events: none;
 }
@@ -923,7 +970,8 @@ body {
     font-size: 0.85rem;
     line-height: 1.5;
     opacity: 0.8;
-    margin-bottom: 1.5rem; /* Reduced to make room for pricing block */
+    margin-bottom: 1.5rem;
+    /* Reduced to make room for pricing block */
     color: #666666;
 }
 
@@ -933,9 +981,11 @@ body {
     line-height: 1.6;
     color: #4a4a4a;
     margin-bottom: 3rem;
-    background: rgba(26, 79, 50, 0.03); /* Extremely subtle green tint */
+    background: rgba(26, 79, 50, 0.03);
+    /* Extremely subtle green tint */
     padding: 1.2rem 1.5rem;
-    border-left: 2px solid #eaddb6; /* Gold brand accent */
+    border-left: 2px solid #eaddb6;
+    /* Gold brand accent */
 }
 
 .exp-pricing p {
@@ -949,7 +999,8 @@ body {
 .exp-pricing ul {
     margin: 0;
     padding-left: 1.2rem;
-    list-style-type: none; /* Custom bullet style */
+    list-style-type: none;
+    /* Custom bullet style */
 }
 
 .exp-pricing li {
@@ -959,7 +1010,8 @@ body {
 
 .exp-pricing li::before {
     content: "•";
-    color: #eaddb6; /* Gold bullets */
+    color: #eaddb6;
+    /* Gold bullets */
     position: absolute;
     left: -1rem;
     font-size: 1.2rem;
@@ -1178,7 +1230,7 @@ body {
     max-height: 70vh;
     overflow: hidden;
     border-radius: 200px 200px 0 0;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(234, 221, 182, 0.5);
 }
 
@@ -1389,14 +1441,13 @@ body {
 /* Nav Dropdown (Events) */
 .nav-dropdown-wrapper {
     position: relative;
-    display: inline-block;
-    padding-bottom: 2rem; /* creates safe hover bridge */
-    margin-bottom: -2rem;
+    display: flex;
+    align-items: center;
 }
 
 .events-dropdown {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 15px);
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     background: rgba(26, 79, 50, 0.95);
@@ -1407,8 +1458,19 @@ body {
     opacity: 0;
     pointer-events: none;
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     border-radius: 4px;
+}
+
+.events-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    /* bridges the gap to prevent hover loss */
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: transparent;
 }
 
 .nav-dropdown-wrapper:hover .events-dropdown {
@@ -1486,7 +1548,7 @@ body {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
-    z-index: 100;
+    z-index: 99000; /* Above navbar (10000), below preloader (99999) */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1502,17 +1564,16 @@ body {
 
 .luxury-modal {
     background-color: #1a4f32;
-    width: 90%;
-    max-width: 700px;
-    padding: 3.5rem 3rem;
-    /* Extra vertical padding for corners */
+    width: clamp(300px, 90%, 700px); /* Fluid: never too small or too wide */
+    max-height: 90vh; /* Never taller than 90% of the viewport */
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.2rem, 3vw, 3rem); /* Fluid padding */
     position: relative;
     color: #f7f5ed;
     border: 1px solid #2a6f47;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     transform: translateY(40px) scale(0.95);
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    overflow: hidden;
+    overflow-y: auto; /* Scroll internally if content is tall */
 }
 
 .modal-corner {
@@ -1672,11 +1733,13 @@ body {
 .wizard-modal {
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Important to hide inactive steps sliding off */
+    overflow: hidden;
+    /* Important to hide inactive steps sliding off */
 }
 
 .wizard-step {
-    display: none; /* Hide steps by default */
+    display: none;
+    /* Hide steps by default */
     flex-direction: column;
     width: 100%;
     animation: slideInStep 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -1687,8 +1750,15 @@ body {
 }
 
 @keyframes slideInStep {
-    0% { opacity: 0; transform: translateX(20px); }
-    100% { opacity: 1; transform: translateX(0); }
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* Wizard Cards (Step 1) */
@@ -1716,7 +1786,7 @@ body {
 .wizard-card.selected {
     border-color: #eaddb6;
     background: rgba(234, 221, 182, 0.1);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .wizard-card h4 {
@@ -1740,7 +1810,8 @@ body {
     justify-content: center;
     gap: 1.5rem;
     margin-bottom: 3rem;
-    flex-wrap: wrap; /* Allows multiple colors to span multiple rows neatly */
+    flex-wrap: wrap;
+    /* Allows multiple colors to span multiple rows neatly */
 }
 
 .color-swatch {
@@ -1750,7 +1821,7 @@ body {
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .color-swatch:hover {
@@ -1818,4 +1889,418 @@ body {
 
 .gold-text {
     color: #eaddb6;
+}/* Mobile Responsiveness tweaks */
+@media (max-width: 768px) {
+
+    html {
+        scroll-snap-type: none !important; /* scroll-snap breaks position:fixed on mobile */
+    }
+
+    .hero-section,
+    .discover-section,
+    .experience-section,
+    .curated-section,
+    .about-section {
+        scroll-snap-align: none !important;
+        scroll-snap-stop: unset !important;
+    }
+
+    .navbar {
+        padding: 1.5rem 1.5rem !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        z-index: 10000 !important;
+        transition: none !important;
+    }
+
+    .navbar.scrolled {
+        padding: 1.5rem 1.5rem !important;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    .hamburger-btn {
+        display: flex;
+    }
+
+    .modal-backdrop {
+        align-items: flex-start !important;
+        overflow-y: auto !important;
+        padding: 2rem 0;
+    }
+
+    /* Private Experience Form (Luxury Modal) */
+    .luxury-modal {
+        margin: 0 auto !important;
+        /* Base styles now handle fluid sizing via clamp() */
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr; /* Stack all fields into one column */
+        gap: 1.5rem;
+    }
+
+    .input-group.full-width {
+        grid-column: 1; /* Reset, only one column now */
+    }
+
+    .modal-close {
+        z-index: 1000;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    .wizard-cards {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Preloader Mobile Typography Fix */
+    .preloader-logo-small {
+        font-size: 8vw;
+        letter-spacing: 0.2em;
+        margin-bottom: -1vw;
+    }
+
+    .preloader-logo-large-left,
+    .preloader-logo-large-right {
+        font-size: 20vw;
+        letter-spacing: 0.1em;
+    }
+
+    .hero-content {
+        transform: translateY(-200px);
+        /* Pull entire text block much higher */
+    }
+
+    .hero-content .title {
+        font-size: 16vw;
+        margin-bottom: 0;
+    }
+
+    .main-hat {
+        width: 95vw;
+        top: 55vh;
+        /* Bring hat down safely below text */
+    }
+
+    .launch-badge-container {
+        top: 78vh;
+        /* Place below the hat */
+        left: 10vw;
+        /* Perfect center */
+        width: 80vw;
+        /* Much larger */
+        right: auto;
+        bottom: auto;
+    }
+
+    .launch-badge-content {
+        margin-top: 6vw;
+        gap: 2vw;
+    }
+
+    .launch-countdown {
+        font-size: 3.2vw;
+    }
+
+    .launch-more-btn {
+        font-size: 2.5vw;
+        padding: 1.5vw 4vw;
+    }
+
+    /* Scale up other background items */
+    .pin {
+        width: 25vw;
+        top: 90vh;
+        left: 5vw;
+    }
+
+    .wire {
+        width: 35vw;
+        top: 88vh;
+        left: 65vw;
+    }
+
+    .lace {
+        width: 30vw;
+        top: 5vh;
+        left: 5vw;
+    }
+
+    /* Moved upward */
+    .feather {
+        width: 45vw;
+        top: 5vh;
+        right: -5vw;
+        left: auto;
+    }
+
+    /* Moved to top right */
+    .green-silk {
+        display: none !important;
+    }
+
+    /* Hide green silk on mobile */
+    .gold-silk {
+        width: 70vw;
+        top: -5vh;
+        right: -20vw;
+    }
+
+    /* ==================== DISCOVER SECTION ==================== */
+    .discover-typography {
+        /* margin-left: 35vw;  */
+        margin-top: 15vh;
+        width: 60vw;
+        align-items: flex-start;
+        text-align: left;
+        padding: 0;
+    }
+
+    .discover-typography .dis-line {
+        white-space: nowrap;
+    }
+    
+    .discover-typography .dis-line:nth-child(3) {
+        margin-top: -2vh; /* Reduced from desktop -6vh */
+    }
+
+    .discover-typography .dis-line:nth-child(4) {
+        margin-top: 0; /* Reduced from desktop -1vh */
+    }
+
+    .discover-typography .din-text {
+        font-size: 16vw;
+    }
+
+    .discover-typography .avaleigh-italic {
+        font-size: 13vw;
+    }
+
+    .discover-typography .avaleigh-italic.lowercase {
+        font-size: 14vw;
+    }
+
+    .discover-typography .avaleigh-italic.indent {
+        margin-left: 2vw;
+        font-size: 15vw;
+    }
+
+    .welcome-text {
+        position: relative;
+        left: 0;
+        bottom: auto;
+        max-width: unset;
+        width: auto;
+        margin: 5vh 8vw 0 8vw; /* Use margins instead of padding for width spacing */
+        padding: 0;
+        text-align: left;
+        z-index: 20;
+    }
+
+    .welcome-text .welcome-desc {
+        font-size: 1.1rem;
+    }
+
+    .discover-black-hat {
+        top: auto !important;
+        bottom: -12% !important; /* Lower on the screen */
+        right: -20vw !important; /* Further to the right */
+        width: 50vw;
+        transform: rotate(-15deg) !important;
+    }
+
+    /* ==================== EXPERIENCE SECTION ==================== */
+    .experience-section {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 5vh;
+    }
+
+    .exp-split {
+        flex-direction: column;
+    }
+
+    .exp-image-container {
+        display: none !important; /* Image removed completely on mobile */
+    }
+
+    .exp-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 5vw 6vw; /* Tighter vertical padding */
+        flex: none;
+        justify-content: flex-start; /* Flow naturally to the top */
+        margin-top: 5vh;
+    }
+
+    .exp-title .din-text {
+        font-size: 10vw; /* Reduced from 13vw */
+    }
+
+    .exp-title .avaleigh-italic {
+        font-size: 13vw; /* Reduced from 16vw */
+        margin-left: 0;
+    }
+
+    .exp-cta {
+        align-self: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* ==================== CURATED BOXES SECTION ==================== */
+    .curated-section {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 5vh;
+    }
+
+    .curated-split {
+        flex-direction: column-reverse; /* Force image above text because text is first in DOM */
+    }
+
+    .curated-image-container {
+        width: 100%;
+        max-width: 100%;
+        height: 30vh; /* Slightly taller container */
+        flex: none;
+    }
+
+    .curated-box {
+        width: 85% !important; /* Slightly larger */
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .curated-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 5vw 6vw;
+        flex: none;
+        justify-content: flex-start;
+        margin-top: 5vh;
+    }
+
+    .curated-title .din-text {
+        font-size: 13vw !important;
+    }
+
+    .curated-title .avaleigh-italic {
+        font-size: 11vw !important;
+        top: 0 !important;
+    }
+
+    .curated-cta {
+        align-self: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* ==================== ABOUT SECTION ==================== */
+    .about-section {
+        height: auto;
+        min-height: 100vh;
+        padding: 8vh 0 5vh;
+        align-items: flex-start;
+    }
+
+    .about-split {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 6vw;
+        gap: 4vw;
+        height: auto;
+    }
+
+    .about-image-wrapper {
+        width: 100%;
+        height: auto;
+        justify-content: center;
+    }
+
+    .about-image-frame {
+        width: 50vw;
+        height: 65vw;
+        max-height: 55vh;
+    }
+
+    .about-content {
+        width: 100%;
+    }
+
+    .about-subtitle {
+        text-align: left;
+        margin-bottom: 0.75rem;
+    }
+
+    .about-title {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Override inline vw font sizes for mobile */
+    .about-title .din-text {
+        font-size: 11vw !important;
+    }
+
+    .about-title .avaleigh-italic {
+        font-size: 13vw !important;
+        top: 0 !important;
+    }
+
+    .about-text-wrapper {
+        padding-left: 1.2rem;
+    }
+
+    .about-body {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* ==================== FOOTER ==================== */
+    .luxury-footer {
+        height: auto;
+        padding: 6vh 6vw 4vh;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        gap: 4vh;
+        padding-bottom: 3rem;
+    }
+
+    .footer-brand {
+        max-width: 100%;
+    }
+
+    .footer-logo .din-text {
+        font-size: 2.5rem;
+    }
+
+    .footer-logo .avaleigh-italic {
+        font-size: 3.5rem;
+        top: -0.5rem;
+    }
+
+    .footer-tagline {
+        font-size: 0.95rem;
+    }
+
+    .footer-links {
+        gap: 4rem; /* Tighten the gap between the two columns */
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .legal-links {
+        gap: 1.5rem;
+    }
 }
